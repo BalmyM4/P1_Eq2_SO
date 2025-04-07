@@ -11,6 +11,8 @@ public class Proceso {
     private int tamaño;
     private int t_rafaga;
     private int t_llegada;
+
+    // Auxiliares para los calculos de tiempos y turnos
     private int ultimoAsenso;
     private int rafaga_acum;
     private int turnos;
@@ -74,7 +76,6 @@ public class Proceso {
 
 
     // Setters 
-
     public void setRafagaAcum(int rafaga_acum){
         this.rafaga_acum = rafaga_acum;
     }
@@ -92,7 +93,7 @@ public class Proceso {
     }
 
     public void set_Ultimoascenso(int t){
-        this.ultimoAsenso = t;;
+        this.ultimoAsenso = t;
     }
 
 }

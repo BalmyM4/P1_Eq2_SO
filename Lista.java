@@ -9,8 +9,8 @@ import java.util.LinkedList;
 
 
 public class Lista {
-    private LinkedList<Proceso> colaProcesos; //cola general
-    private LinkedList<Proceso> colaRam;  // cola para los cargadoe ram 
+    private LinkedList<Proceso> colaPListos; //cola general
+    private LinkedList<Proceso> colaPListosEjecucion;  // cola para los cargadoe ram 
 
     private int capacidadRAM;
     private int memoriaDispo;
@@ -18,19 +18,19 @@ public class Lista {
     public Lista(int capacidadRAM){
         this.capacidadRAM = capacidadRAM;
         this.memoriaDispo = capacidadRAM;
-        colaProcesos = new LinkedList<>();
-        colaRam = new LinkedList<>();
+        colaPListos = new LinkedList<>();
+        colaPListosEjecucion = new LinkedList<>();
     }
 
 
     public void agregarProceso(Proceso proceso){
-        colaProcesos.add(proceso);
+        colaPListos.add(proceso);
     }
 
     //Para cargar por primera vez en la cola de la ram comprobamos si hay espacio
     public boolean cargarEnRam(Proceso proceso){
         if(proceso.getTamaño() <= memoriaDispo){
-            colaRam.add(proceso);
+            colaPListosEjecucion.add(proceso);
             memoriaDispo -= proceso.getTamaño();
             return true;
         }
@@ -46,13 +46,13 @@ public class Lista {
 
 
      public void rellenarRam(){
-        for(int i = 0; i < colaProcesos.size(); ){
-            Proceso p = colaProcesos.get(i);
+        for(int i = 0; i < colaPListos.size(); ){
+            Proceso p = colaPListos.get(i);
 
             if(p.getTamaño() <= memoriaDispo){
-                colaRam.add(p);
+                colaPListosEjecucion.add(p);
                 memoriaDispo -= p.getTamaño();
-                colaProcesos.remove(i);
+                colaPListos.remove(i);
             }else{
                 i--;
             }
@@ -61,12 +61,12 @@ public class Lista {
      }
     */
 
-    public LinkedList<Proceso> getColaProcesos(){
-        return colaProcesos;
+    public LinkedList<Proceso> getcolaPListos(){
+        return colaPListos;
     }
 
-    public LinkedList<Proceso> getColaRam(){
-        return colaRam;
+    public LinkedList<Proceso> getcolaPListosEjecucion(){
+        return colaPListosEjecucion;
     }
 
     public int getMemoriaDispo(){
@@ -77,25 +77,25 @@ public class Lista {
         return capacidadRAM;
     }
 
-    public boolean colaProcesosVacia(){
-        return colaProcesos.isEmpty();
+    public boolean colaPListosVacia(){
+        return colaPListos.isEmpty();
     }
 
-    public boolean colaRamVacia(){
-        return colaRam.isEmpty();
+    public boolean colaPListosEjecucionVacia(){
+        return colaPListosEjecucion.isEmpty();
     }
 
 
     public void eliminarProceso(Proceso proceso){
-        colaProcesos.remove(proceso);
+        colaPListos.remove(proceso);
     }
 
     public void eliminarProcesoRam(Proceso proceso){
-        colaRam.remove(proceso);
+        colaPListosEjecucion.remove(proceso);
     }
 
     public Proceso obtenerProcesos(int ID){ //Podemso obtenerlos por ID
-        for(Proceso p : colaProcesos){
+        for(Proceso p : colaPListos){
             if(p.getId() == ID) {
                 return p;
             }
@@ -103,25 +103,25 @@ public class Lista {
         return null;
     }
 
-    public int tamañoColaRam(){
-        return colaRam.size();
+    public int tamañocolaPListosEjecucion(){
+        return colaPListosEjecucion.size();
     }
 
-    public int tamañoColaProcesos(){
-        return colaProcesos.size();
+    public int tamañocolaPListos(){
+        return colaPListos.size();
     }
 
 
     //Para limpiar cola general
     
     public void limpiar(){
-        colaProcesos.clear();
+        colaPListos.clear();
     }
 
     //Para ir removiendo procesos de la ram
 
     public void liberarRam(Proceso proceso){
-        if(colaRam.remove(proceso)){
+        if(colaPListosEjecucion.remove(proceso)){
             memoriaDispo += proceso.getTamaño();
             //rellenarRam();
         }

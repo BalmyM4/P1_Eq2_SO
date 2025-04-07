@@ -10,6 +10,7 @@ public class RoundRobin {
     // Variables para los calculos
     private int tiempoEspera;
     private int tiempoRespuesta;
+    private int tiempoTotal;
 
 
     // Variables auxiliares
@@ -66,8 +67,8 @@ public class RoundRobin {
 
         for (int i = 0; i < quantum; i++) {
 
-            if (proceso.getRafaga() > 0) {
-                proceso.setRafaga(proceso.getRafaga() - 1);
+            if (proceso.getRafagaFaltante() > 0) {
+                proceso.setRafagaFaltante(proceso.getRafagaFaltante() - 1);
                 tiempoTotal++;
             } 
             else {

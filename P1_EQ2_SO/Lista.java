@@ -1,3 +1,4 @@
+package P1_EQ2_SO;
 import java.util.LinkedList;
 
 /*
@@ -9,8 +10,8 @@ import java.util.LinkedList;
 
 
 public class Lista {
-    private LinkedList<Proceso> colaPListos; //cola general
-    private LinkedList<Proceso> colaPListosEjecucion;  // cola para los cargadoe ram 
+    private LinkedList<Proceso> colaPListos;            //cola general
+    private LinkedList<Proceso> colaPListosEjecucion;   // cola para los cargadoe ram 
 
     private int capacidadRAM;
     private int memoriaDispo;

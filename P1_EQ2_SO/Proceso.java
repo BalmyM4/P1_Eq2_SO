@@ -1,3 +1,4 @@
+package P1_EQ2_SO;
 /*
  * 
  *      Manejo de procesos para las listas de procesos

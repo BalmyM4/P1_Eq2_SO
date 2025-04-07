@@ -1,4 +1,5 @@
 package P1_EQ2_SO;
+
 /*
  * 
  *      Manejo de procesos para las listas de procesos
@@ -7,6 +8,8 @@ package P1_EQ2_SO;
  */
 
  public class Proceso {
+    private static int idActual = 0;
+
     private int id;          //Identificacion unica del proceso
     private String nombre;   //Nombre en cada proceso (asignable)
     private int tamaño;      //Tamaño de memoria que ocupa (asignable)
@@ -88,6 +91,9 @@ package P1_EQ2_SO;
     public int getT_respuesta(){
         return t_respuesta;
     }
+    public static int getIdActual(){
+        return idActual;
+    }
 
 
     /*
@@ -117,5 +123,12 @@ package P1_EQ2_SO;
     public void set_Ultimoascenso(int t){
         this.ultimoAsenso = t;
     }
+    public static void aumentarIdActual(){
+        idActual++;
+    }
 
 }
+
+
+
+

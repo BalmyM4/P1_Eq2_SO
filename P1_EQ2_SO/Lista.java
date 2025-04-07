@@ -139,6 +139,24 @@ public class Lista {
     }
 
     /*
+     * Pop de procesos de la cola de procesos listos
+     * Pop de procesos de la cola de procesos listos para ejecucion
+     */
+
+    public Proceso popColaPListo(){
+        Proceso procesoAux = colaPListos.removeFirst();
+        imprimircolaPListos();
+        return procesoAux;
+    }
+
+    public Proceso popColaPListoEjecucion (){
+        Proceso procesoAux = colaPListosEjecucion.removeFirst();
+        imprimircolaPListosEjecucion();
+        return procesoAux;
+    }
+
+
+    /*
      * Podremos buscar un proceso por su ID unico en la cola general
      */
     public Proceso obtenerProcesos(int ID){ 

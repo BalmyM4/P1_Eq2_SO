@@ -1,10 +1,11 @@
 package P1_EQ2_SO;
-import java.util.LinkedList;
+//import java.util.LinkedList;
 
 public class RoundRobin {
     
     // Variables para el algoritmo
     private int quantum;
+    private int quantumAct; // Lista de procesos
 
 
     // Variables para los calculos
@@ -65,19 +66,21 @@ public class RoundRobin {
     // Metodos para el algoritmo
     public void asigarCPU( Proceso proceso ) {
 
-        for (int i = 0; i < quantum; i++) {
 
-            if (proceso.getRafagaFaltante() > 0) {
-                proceso.setRafagaFaltante(proceso.getRafagaFaltante() - 1);
-                tiempoTotal++;
-            } 
-            else {
-                procesosTerminados++;
-                break;
-            }
+        if (proceso.getRafagaFaltante() > 0) {
+            proceso.setRafagaFaltante(proceso.getRafagaFaltante() - 1);
+            quantumAct--;
+            System.err.println("Proceso " + proceso.getNombre() + ": " + proceso.getRafagaFaltante() + " ms.");
+            tiempoTotal++;
+        } 
+        else {
+            procesosTerminados++;
+            break;
         }
-
+        
     }
+
+
 
 
 }

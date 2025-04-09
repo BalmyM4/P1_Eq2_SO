@@ -58,12 +58,11 @@ public class RoundRobin {
         if (proceso.getRafagaFaltante() > 0) {
             proceso.setRafagaFaltante(proceso.getRafagaFaltante() - 1);
             quantumAct--;
-            System.err.println("Proceso " + proceso.getNombre() + ": " + proceso.getRafagaFaltante() + " ms.");
+            System.out.println("Proceso " + proceso.getNombre() + ": " + proceso.getRafagaFaltante() + " ms.");
             tiempoTotal++;
         }
         else {
             procesosTerminados++;
-            break;
         }
     }
 }

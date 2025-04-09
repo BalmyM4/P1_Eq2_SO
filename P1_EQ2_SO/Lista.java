@@ -17,7 +17,7 @@ public class Lista {
     private int memoriaDispo; //Valor de memoria disponible (para verificaciones)
     private int idActual = 10000; //5 digitos de base para los ID
 
-    //Constructor 
+    //Constructor
     public Lista(int capacidadRAM){
         this.capacidadRAM = capacidadRAM;
         this.memoriaDispo = capacidadRAM;
@@ -33,11 +33,9 @@ public class Lista {
         return idActual++;
     }
 
-
-     /*
-      * 
-      Metodo de integración de procesos a la cola 
-      */
+    /*
+     * Metodo de integración de procesos a la cola
+     */
     public void agregarProceso(Proceso proceso){
         colaPListos.add(proceso);
         System.out.println("\tProceso " + proceso.getNombre() + " agregado a la cola de procesos\n " );
@@ -47,7 +45,7 @@ public class Lista {
     /*
      * Para cargar procesos en la cola de procesos listos
      * de la ram comprobamos si hay espacio (boleana)
-     * 
+     *
     */
     public boolean cargarEnRam(Proceso proceso){
         if(proceso.getTamaño() <= memoriaDispo){
@@ -63,11 +61,11 @@ public class Lista {
     }
 
     /*
-     * 
+     *
      * Esta función esta en duda por si la ocupan en la logica
-     * si hay procesos esperando por la limitacion de espacio 
+     * si hay procesos esperando por la limitacion de espacio
      * y necesitamos cargarlos en ram cuando se libere otra vez
-     * 
+     *
 
 
      public void rellenarRam(){

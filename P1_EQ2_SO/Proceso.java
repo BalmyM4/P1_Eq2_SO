@@ -1,13 +1,13 @@
 package P1_EQ2_SO;
 
 /*
- * 
+ *
  *      Manejo de procesos para las listas de procesos
- * 
- * 
+ *
+ *
  */
 
- public class Proceso {
+public class Proceso {
     private static int idActual = 0;
 
     private int id;          //Identificacion unica del proceso

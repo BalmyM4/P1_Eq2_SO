@@ -2,20 +2,15 @@ package P1_EQ2_SO;
 //import java.util.LinkedList;
 
 public class RoundRobin {
-    
     // Variables para el algoritmo
     private int quantum;
     private int quantumAct; // Lista de procesos
-
-
     // Variables para los calculos
     private int tiempoEspera;
     private int tiempoRespuesta;
     private int tiempoTotal;
-
     // Variables auxiliares
     private int procesosTerminados;
-
     // Constructor
     public RoundRobin(Lista lista, int quantum){
         this.quantum = quantum;
@@ -24,7 +19,6 @@ public class RoundRobin {
         this.tiempoRespuesta = 0;
         this.procesosTerminados = 0;
     }
-
     // Setters
     public void setQuantum(int quantum){
         this.quantum = quantum;
@@ -72,6 +66,4 @@ public class RoundRobin {
             break;
         }
     }
-
-    public void
 }

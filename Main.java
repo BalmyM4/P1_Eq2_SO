@@ -8,7 +8,7 @@ import P1_EQ2_SO.Lista;
 
 public class Main {
     public static void main(String[] args) {
-        
+        System.out.println("Bienvenidos - Proyecto Simulador de Procesos - Round Robin\n");
         // Objeto auxiliar para leer el archivo CSV
         Auxiliar auxiliar = new Auxiliar();
 

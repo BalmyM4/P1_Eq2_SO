@@ -40,7 +40,7 @@ public class Lista {
       */
     public void agregarProceso(Proceso proceso){
         colaPListos.add(proceso);
-        System.out.println("\tProceso" + proceso.getNombre() + "agregado a la cola de procesos\n " );
+        System.out.println("\tProceso " + proceso.getNombre() + " agregado a la cola de procesos\n " );
         imprimircolaPListos();
     }
 
@@ -53,7 +53,7 @@ public class Lista {
         if(proceso.getTamaño() <= memoriaDispo){
             colaPListosEjecucion.add(proceso);
             memoriaDispo -= proceso.getTamaño();
-            System.out.println("\tProceso" + proceso.getNombre() + "sube a RAM\n" );
+            System.out.println("\tProceso " + proceso.getNombre() + " sube a RAM\n" );
             imprimircolaPListosEjecucion();
             return true;
         }else{

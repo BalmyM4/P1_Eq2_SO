@@ -13,10 +13,8 @@ public class RoundRobin {
     private int tiempoRespuesta;
     private int tiempoTotal;
 
-
     // Variables auxiliares
     private int procesosTerminados;
-
 
     // Constructor
     public RoundRobin(Lista lista, int quantum){
@@ -26,7 +24,6 @@ public class RoundRobin {
         this.tiempoRespuesta = 0;
         this.procesosTerminados = 0;
     }
-
 
     // Setters
     public void setQuantum(int quantum){
@@ -62,25 +59,19 @@ public class RoundRobin {
         return procesosTerminados;
     }
 
-    
     // Metodos para el algoritmo
     public void asigarCPU( Proceso proceso ) {
-
-
         if (proceso.getRafagaFaltante() > 0) {
             proceso.setRafagaFaltante(proceso.getRafagaFaltante() - 1);
             quantumAct--;
             System.err.println("Proceso " + proceso.getNombre() + ": " + proceso.getRafagaFaltante() + " ms.");
             tiempoTotal++;
-        } 
+        }
         else {
             procesosTerminados++;
             break;
         }
-        
     }
 
-
-
-
+    public void
 }

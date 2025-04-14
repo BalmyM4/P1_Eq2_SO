@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 public class Auxiliar {
 
@@ -26,7 +27,43 @@ public class Auxiliar {
         }
     }
 
+    public LinkedList<Proceso> tecladoprocesos( Scanner scan ){
 
+        LinkedList<Proceso> procesos = new LinkedList<>();
+
+        int numProcesos; //Variable que indica el número de procesos en la simulación
+        String nombre;
+        int tamaño;
+        int t_rafaga;
+        int t_llegada;
+        System.out.print("Introduzca el número de procesos que desea en su simulación: ");
+        numProcesos = scan.nextInt();
+        
+        for(int i = 0; i < numProcesos; i++ ){
+            System.out.print("Introduzca el nombre del proceso "+i+": ");
+            nombre = scan.next();
+            System.out.print("Introduzca el tamaño del proceso "+i+": ");
+            tamaño = scan.nextInt();
+            System.out.print("Introduzca el tiempo de ejecución del proceso "+i+": ");
+            t_rafaga = scan.nextInt();
+            System.out.print("Introduzca el tiempo de llegada del proceso "+i+": ");
+            t_llegada = scan.nextInt();
+
+            Proceso newProceso = new Proceso(
+                Proceso.getIdActual(),          // ID
+                nombre,                     // Nombre
+                tamaño,   // Tamaño
+                t_rafaga,   // Rafaga
+                t_llegada    // Tiempo de llegada
+            );
+            procesos.add(newProceso);
+            Proceso.aumentarIdActual();// Aumentar el ID actual
+            
+        } 
+
+
+        return procesos;
+    }
 
     public LinkedList<Proceso> leerProcesos( String nomArchivo ) {
 

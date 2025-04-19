@@ -23,32 +23,25 @@ public class RoundRobin {
 
     public void simular() {
         System.out.println("\nIniciando simulación Round Robin (Quantum: " + quantum + ")\n");
-        
         while (!simulacionTerminada()) {
             System.out.println("\n--- Ciclo T = " + tiempoTotal + " ---");
-            
             // 1. Manejar nuevos procesos que llegan en este ciclo
             manejarLlegadasProcesos();
-            
             // 2. Cargar procesos a RAM si hay espacio
             cargarProcesosRAM();
-            
             // 3. Ejecutar procesos en CPU
             ejecutarCPU();
-            
             // 4. Actualizar tiempos de espera
             actualizarTiemposEspera();
-            
             tiempoTotal++;
         }
-        
         mostrarMetricasFinales();
     }
 
     private boolean simulacionTerminada() {
-        return listaProcesos.colaPListosVacia() && 
-               listaProcesos.colaPListosEjecucionVacia() &&
-               procesosCompletados == totalProcesosIniciales;
+        return listaProcesos.colaPListosVacia() &&
+                listaProcesos.colaPListosEjecucionVacia() &&
+                procesosCompletados == totalProcesosIniciales;
     }
 
     private void manejarLlegadasProcesos() {
@@ -64,22 +57,20 @@ public class RoundRobin {
     private void cargarProcesosRAM() {
         while (!listaProcesos.colaPListosVacia()) {
             Proceso p = listaProcesos.getcolaPListos().getFirst();
-            
             // Solo cargar procesos que ya han llegado
             if (p.getT_llegada() > tiempoTotal) {
                 break;
             }
-            
             if (p.getTamaño() <= listaProcesos.getMemoriaDispo()) {
                 Proceso procesoCargado = listaProcesos.popColaPListo();
                 listaProcesos.cargarEnRam(procesoCargado);
-                System.out.println(" * " + procesoCargado.getNombre() + 
-                                  " (" + procesoCargado.getTamaño() + "MB) subió a RAM. " + 
-                                  listaProcesos.getMemoriaDispo() + "MB restantes");
+                System.out.println(" * " + procesoCargado.getNombre() +
+                                    " (" + procesoCargado.getTamaño() + "MB) subió a RAM. " +
+                                    listaProcesos.getMemoriaDispo() + "MB restantes");
             } else {
-                System.out.println(" * No hay RAM suficiente para " + p.getNombre() + 
-                                 " (necesita " + p.getTamaño() + "MB, disponible " + 
-                                 listaProcesos.getMemoriaDispo() + "MB)");
+                System.out.println(" * No hay RAM suficiente para " + p.getNombre() +
+                                    " (necesita " + p.getTamaño() + "MB, disponible " +
+                                    listaProcesos.getMemoriaDispo() + "MB)");
                 break;
             }
         }
@@ -88,28 +79,26 @@ public class RoundRobin {
     private void ejecutarCPU() {
         if (!listaProcesos.colaPListosEjecucionVacia()) {
             Proceso procesoActual = listaProcesos.getcolaPListosEjecucion().getFirst();
-            
             // Registrar tiempo de respuesta si es la primera vez
             if (procesoActual.getT_respuesta() == -1) {
                 procesoActual.set_Trespuesta(tiempoTotal);
                 tiempoRespuestaTotal += tiempoTotal - procesoActual.getT_llegada();
-                System.out.println(" * " + procesoActual.getNombre() + 
-                                  " responde por primera vez en T=" + tiempoTotal);
+                System.out.println(" * " + procesoActual.getNombre() +
+                                    " responde por primera vez en T=" + tiempoTotal);
             }
 
             // Ejecutar proceso
             procesoActual.setRafagaAcum(procesoActual.getRafAcum() + 1);
             procesoActual.setContador(procesoActual.getContadorTurnos() + 1);
-            
-            System.out.println(" * Ejecutando " + procesoActual.getNombre() + 
-                             " (" + procesoActual.getRafAcum() + "/" + 
-                             procesoActual.getRafaga() + ") | Q=" + 
-                             procesoActual.getContadorTurnos());
+            System.out.println(" * Ejecutando " + procesoActual.getNombre() +
+                                " (" + procesoActual.getRafAcum() + "/" +
+                                procesoActual.getRafaga() + ") | Q=" +
+                                procesoActual.getContadorTurnos());
 
             // Verificar si el proceso ha terminado
             if (procesoActual.getRafAcum() >= procesoActual.getRafaga()) {
                 finalizarProceso(procesoActual);
-            } 
+            }
             // Verificar si se acabó el quantum
             else if (procesoActual.getContadorTurnos() % quantum == 0) {
                 rotarProceso(procesoActual);
@@ -123,30 +112,24 @@ public class RoundRobin {
         // Calcular tiempo de espera
         int tiempoEspera = tiempoTotal - proceso.getT_llegada() - proceso.getRafaga();
         tiempoEsperaTotal += tiempoEspera;
-        
         // Calcular tiempo de ejecución total
         tiempoEjecucionTotal += tiempoTotal - proceso.getT_llegada();
-        
         // Liberar recursos
         listaProcesos.eliminarProcesoRam(proceso);
         procesosCompletados++;
-        
         System.out.println(" * " + proceso.getNombre() + " completado. " +
-                         "Liberando " + proceso.getTamaño() + "MB de RAM. " +
-                         "Tiempo de espera: " + tiempoEspera);
+                            "Liberando " + proceso.getTamaño() + "MB de RAM. " +
+                            "Tiempo de espera: " + tiempoEspera);
     }
 
     private void rotarProceso(Proceso proceso) {
         if (listaProcesos.getcolaPListosEjecucion().size() > 1) {
             // Reiniciar contador de quantum para el proceso
             proceso.setContador(0);
-            
             // Rotar el proceso al final de la cola
             Proceso procesoRotado = listaProcesos.popColaPListoEjecucion();
             listaProcesos.getcolaPListosEjecucion().addLast(procesoRotado);
-            
             System.out.println(" * Quantum terminado. Rotando " + procesoRotado.getNombre());
-            
             // Mostrar nueva cola de ejecución
             listaProcesos.imprimircolaPListosEjecucion();
         } else {
@@ -163,7 +146,6 @@ public class RoundRobin {
                 p.set_Ultimoascenso(tiempoTotal);
             }
         }
-        
         // Actualizar tiempos de espera para procesos en RAM (excepto el que está en CPU)
         if (!listaProcesos.colaPListosEjecucionVacia()) {
             for (int i = 1; i < listaProcesos.getcolaPListosEjecucion().size(); i++) {
@@ -177,7 +159,6 @@ public class RoundRobin {
         System.out.println("\n=== SIMULACIÓN COMPLETADA ===");
         System.out.println("Tiempo total de simulación: " + tiempoTotal);
         System.out.println("Procesos completados: " + procesosCompletados);
-        
         if (procesosCompletados > 0) {
             System.out.println("\n--- Métricas Promedio ---");
             System.out.printf("Tiempo de ejecución promedio: %d / %d = %.2f\n",
@@ -193,27 +174,21 @@ public class RoundRobin {
     public int getQuantum() {
         return quantum;
     }
-
     public void setQuantum(int quantum) {
         this.quantum = quantum;
     }
-
     public int getTiempoTotal() {
         return tiempoTotal;
     }
-
     public int getTiempoEsperaTotal() {
         return tiempoEsperaTotal;
     }
-
     public int getTiempoRespuestaTotal() {
         return tiempoRespuestaTotal;
     }
-
     public int getTiempoEjecucionTotal() {
         return tiempoEjecucionTotal;
     }
-
     public int getProcesosCompletados() {
         return procesosCompletados;
     }

@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 
 public class Lista {
+    private LinkedList<Proceso> procesos;
     private LinkedList<Proceso> colaPListos; //cola general
     private LinkedList<Proceso> colaPListosEjecucion;  // cola para los cargados en ram 
 
@@ -18,9 +19,10 @@ public class Lista {
     private int idActual = 10000; //5 digitos de base para los ID
 
     //Constructor
-    public Lista(int capacidadRAM){
+    public Lista(int capacidadRAM, LinkedList<Proceso> procesos){
         this.capacidadRAM = capacidadRAM;
         this.memoriaDispo = capacidadRAM;
+        this.procesos = procesos;
         colaPListos = new LinkedList<>();
         colaPListosEjecucion = new LinkedList<>();
     }
@@ -38,7 +40,7 @@ public class Lista {
      */
     public void agregarProceso(Proceso proceso){
         colaPListos.add(proceso);
-        System.out.println("\tProceso " + proceso.getNombre() + " agregado a la cola de procesos\n " );
+        System.out.println("\tProceso " + proceso.getNombre() + " creado y agregado a la cola de procesos listos\n " );
         imprimircolaPListos();
     }
 
@@ -85,8 +87,12 @@ public class Lista {
     */
 
     /*
-     * Getters para el acceso a ambas colas
+     * Getters para las colas
      */
+    public LinkedList<Proceso> getProcesos(){
+        return procesos;
+    }
+
     public LinkedList<Proceso> getcolaPListos(){
         return colaPListos;
     }
@@ -226,7 +232,7 @@ public class Lista {
         System.out.println("\n=====================================================");
         for (int i = colaPListos.size() -1 ; i>=0; i--) {
             Proceso p = colaPListos.get(i);
-            System.out.printf("[%05d  |  %-10s]   ", p.getId(), p.getNombre());
+            System.out.printf("[%2d  |  %-10s]   ", p.getId(), p.getNombre());
         }
     }
 
@@ -241,7 +247,7 @@ public class Lista {
         System.out.println("\n=====================================================");
         for (int i = colaPListosEjecucion.size() -1 ; i>=0; i--) {
             Proceso p = colaPListosEjecucion.get(i);
-            System.out.printf("[%05d  |  %-10s]   ", p.getId(), p.getNombre());
+            System.out.printf("[%2d  |  %-10s]   ", p.getId(), p.getNombre());
         }
     }
 }

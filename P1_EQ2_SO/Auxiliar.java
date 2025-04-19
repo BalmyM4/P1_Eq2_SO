@@ -27,13 +27,13 @@ public class Auxiliar {
         }
     }
 
-    public LinkedList<Proceso> tecladoprocesos( Scanner scan ){
+    public LinkedList<Proceso> tecladoprocesos( Scanner scan, int capacidadRAM ){
 
         LinkedList<Proceso> procesos = new LinkedList<>();
 
         int numProcesos; //Variable que indica el número de procesos en la simulación
         String nombre;
-        int tamaño;
+        int tamaño = 0;
         int t_rafaga;
         int t_llegada;
         System.out.print("Introduzca el número de procesos que desea en su simulación: ");
@@ -42,8 +42,15 @@ public class Auxiliar {
         for(int i = 0; i < numProcesos; i++ ){
             System.out.print("Introduzca el nombre del proceso "+i+": ");
             nombre = scan.next();
-            System.out.print("Introduzca el tamaño del proceso "+i+": ");
-            tamaño = scan.nextInt();
+
+            do {
+                if (tamaño > capacidadRAM) {
+                    System.out.println("El tamaño de un solo proceso no puede rebasar la capacidad de RAm total (RAM="+capacidadRAM+")");
+                }
+                System.out.print("Introduzca el tamaño del proceso "+i+": ");
+                tamaño = scan.nextInt();
+            } while (tamaño > capacidadRAM);
+
             System.out.print("Introduzca el tiempo de ejecución del proceso "+i+": ");
             t_rafaga = scan.nextInt();
             System.out.print("Introduzca el tiempo de llegada del proceso "+i+": ");

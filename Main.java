@@ -8,6 +8,7 @@ import P1_EQ2_SO.RoundRobin;
 public class Main {
     public static void main(String[] args) {
         int seleccion = 0;
+        int capacidadRAM = 1024; // MB de RAM
         Scanner scan = new Scanner(System.in);
         Auxiliar auxiliar = new Auxiliar();
         LinkedList<Proceso> procesos = new LinkedList<>();
@@ -24,7 +25,7 @@ public class Main {
 
             switch (seleccion) {
                 case 1:
-                    procesos = auxiliar.tecladoprocesos(scan);
+                    procesos = auxiliar.tecladoprocesos(scan, capacidadRAM);
                     System.out.println("\nLista de procesos leídos desde el teclado\n");
                     break;
                 case 2:
@@ -54,7 +55,6 @@ public class Main {
         System.out.println("---------------------------------------------\n");
 
         // Configuración inicial
-        int capacidadRAM = 1024; // MB de RAM
         int quantum = 3; // Valor de quantum por defecto
         
         System.out.print("Ingrese el valor del quantum (deje en blanco para usar 3): ");
@@ -65,15 +65,15 @@ public class Main {
         }
 
         // Crear estructuras de datos
-        Lista edd = new Lista(capacidadRAM);
+        Lista edd = new Lista(capacidadRAM, procesos);
         
         // Agregar todos los procesos a la cola de listos
-        for (Proceso p : procesos) {
+        /*for (Proceso p : procesos) {
             edd.agregarProceso(p);
-        }
+        }*/
 
         // Iniciar simulación
-        System.out.println("\nIniciando simulación con:");
+        System.out.println("\n\nIniciando simulación con:");
         System.out.println("- Capacidad RAM: " + capacidadRAM + " MB");
         System.out.println("- Quantum: " + quantum + " unidades de tiempo\n");
         

@@ -18,7 +18,7 @@ public class RoundRobin {
         this.tiempoRespuestaTotal = 0;
         this.tiempoEjecucionTotal = 0;
         this.procesosCompletados = 0;
-        this.totalProcesosIniciales = lista.getcolaPListos().size() + lista.getcolaPListosEjecucion().size();
+        this.totalProcesosIniciales = lista.getProcesos().size();
     }
 
     public void simular() {
@@ -52,9 +52,10 @@ public class RoundRobin {
     }
 
     private void manejarLlegadasProcesos() {
-        for (Proceso p : listaProcesos.getcolaPListos()) {
+        for (Proceso p : listaProcesos.getProcesos()) {
             if (p.getT_llegada() == tiempoTotal) {
-                System.out.println(" * " + p.getNombre() + " llegó al sistema en T=" + tiempoTotal);
+                //System.out.println(" * " + p.getNombre() + " llegó al sistema en T=" + tiempoTotal);
+                listaProcesos.agregarProceso(p);
                 p.set_Ultimoascenso(tiempoTotal);
             }
         }

@@ -131,7 +131,7 @@ public class RoundRobin {
             listaProcesos.getcolaPListosEjecucion().addLast(procesoRotado);
             System.out.println(" * Quantum terminado. Rotando " + procesoRotado.getNombre());
             // Mostrar nueva cola de ejecución
-            //listaProcesos.imprimircolaPListosEjecucion();
+            listaProcesos.imprimircolaPListosEjecucion();
         } else {
             // Solo hay un proceso, reiniciar su quantum
             proceso.setContador(0);

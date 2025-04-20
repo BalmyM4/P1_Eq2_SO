@@ -41,6 +41,7 @@ public class Lista {
     public void agregarProceso(Proceso proceso){
         colaPListos.add(proceso);
         System.out.println("\tProceso " + proceso.getNombre() + " creado y agregado a la cola de procesos listos\n " );
+        imprimircolaPListos();
     }
 
     /*
@@ -53,6 +54,7 @@ public class Lista {
             colaPListosEjecucion.add(proceso);
             memoriaDispo -= proceso.getTamaño();
             System.out.println("\tProceso " + proceso.getNombre() + " sube a RAM\n" );
+            imprimircolaPListosEjecucion();
             return true;
         }else{
             System.out.println("\n\tNo hay espacio suficiente en la RAM" );
@@ -129,12 +131,14 @@ public class Lista {
      */
     public void eliminarProceso(Proceso proceso){
         colaPListos.remove(proceso);
+        imprimircolaPListos();
 
     }
 
     public void eliminarProcesoRam(Proceso proceso){
         if(colaPListosEjecucion.remove(proceso)){
             memoriaDispo += proceso.getTamaño();
+            imprimircolaPListosEjecucion();
         }
     }
 
@@ -145,11 +149,13 @@ public class Lista {
 
     public Proceso popColaPListo(){
         Proceso procesoAux = colaPListos.removeFirst();
+        imprimircolaPListos();
         return procesoAux;
     }
 
     public Proceso popColaPListoEjecucion (){
         Proceso procesoAux = colaPListosEjecucion.removeFirst();
+        imprimircolaPListosEjecucion();
         return procesoAux;
     }
 
@@ -209,5 +215,39 @@ public class Lista {
             if(proceso.getId() == id) return true;
         }
         return false;
+    }
+
+
+    /*
+     * Se agregan métodos de impresión de ambas colar 
+     * métodos adaptables segun sea el caso
+     */
+    public void imprimircolaPListos(){
+        if(colaPListos.isEmpty()){
+            System.out.println("\nLa cola de procesos listos esta vacía");
+            return;
+        }
+        System.out.println("\n=====================================================");
+        System.out.println("\n\tProcesos listos y en espera");
+        System.out.println("\n=====================================================");
+        for (int i = colaPListos.size() -1 ; i>=0; i--) {
+            Proceso p = colaPListos.get(i);
+            System.out.printf("[%2d  |  %-10s]   ", p.getId(), p.getNombre());
+        }
+    }
+
+
+    public void imprimircolaPListosEjecucion(){
+        if(colaPListosEjecucion.isEmpty()){
+            System.out.println("\nLa cola de procesos listos esta vacía");
+            return;
+        }
+        System.out.println("\n=====================================================");
+        System.out.println("\n\tProcesos en ejecución");
+        System.out.println("\n=====================================================");
+        for (int i = colaPListosEjecucion.size() -1 ; i>=0; i--) {
+            Proceso p = colaPListosEjecucion.get(i);
+            System.out.printf("[%2d  |  %-10s]   ", p.getId(), p.getNombre());
+        }
     }
 }

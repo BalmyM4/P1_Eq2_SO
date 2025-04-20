@@ -14,7 +14,6 @@ public class Main {
         LinkedList<Proceso> procesos = new LinkedList<>();
 
         System.out.println("\n\nBienvenidos - Proyecto Simulador de Procesos - Round Robin\n");
-        
         // Menú de selección de entrada de datos
         System.out.println("Seleccione la manera en que desea iniciar la simulación\n");
         while (seleccion != 1 && seleccion != 2) {

@@ -82,14 +82,21 @@ public class RoundRobin {
             // Registrar tiempo de respuesta si es la primera vez
             if (procesoActual.getT_respuesta() == -1) {
                 procesoActual.set_Trespuesta(tiempoTotal);
+                //System.out.println("\n\nPrueba\n"+procesoActual.getNombre()+"\t"+procesoActual.getT_respuesta()+"\n\n");
                 tiempoRespuestaTotal += tiempoTotal - procesoActual.getT_llegada();
                 System.out.println(" * " + procesoActual.getNombre() +
                                     " responde por primera vez en T=" + tiempoTotal);
             }
 
             // Ejecutar proceso
-            procesoActual.setRafagaAcum(procesoActual.getRafAcum() + 1);
-            procesoActual.setContador(procesoActual.getContadorTurnos() + 1);
+            if (tiempoTotal != 0 && procesoActual.isEstado()) {
+                procesoActual.setRafagaAcum(procesoActual.getRafAcum() + 1);
+                procesoActual.setContador(procesoActual.getContadorTurnos() + 1);
+            }
+            else{
+                procesoActual.setEstado(true);
+            }
+
             System.out.println(" * Ejecutando " + procesoActual.getNombre() +
                                 " (" + procesoActual.getRafAcum() + "/" +
                                 procesoActual.getRafaga() + ") | Q=" +
@@ -100,7 +107,7 @@ public class RoundRobin {
                 finalizarProceso(procesoActual);
             }
             // Verificar si se acabó el quantum
-            else if (procesoActual.getContadorTurnos() % quantum == 0) {
+            else if (procesoActual.getContadorTurnos() % quantum == 0 && procesoActual.getContadorTurnos() != 0) {
                 rotarProceso(procesoActual);
             }
         } else {
@@ -120,18 +127,51 @@ public class RoundRobin {
         System.out.println(" * " + proceso.getNombre() + " completado. " +
                             "Liberando " + proceso.getTamaño() + "MB de RAM. " +
                             "Tiempo de espera: " + tiempoEspera);
+
+        if (listaProcesos.getcolaPListosEjecucion().isEmpty() && !listaProcesos.getcolaPListos().isEmpty()) {
+            cargarProcesosRAM();
+        }
+
+        if(listaProcesos.getcolaPListosEjecucion().size() >= 1){
+            Proceso procesoActual = listaProcesos.getcolaPListosEjecucion().getFirst();
+            if (procesoActual.getT_respuesta() == -1) {
+                procesoActual.set_Trespuesta(tiempoTotal);
+                tiempoRespuestaTotal += tiempoTotal - procesoActual.getT_llegada();
+                System.out.println(" * " + procesoActual.getNombre() +
+                                    " responde por primera vez en T=" + tiempoTotal);
+                procesoActual.setEstado(true);
+            }
+        }
     }
 
     private void rotarProceso(Proceso proceso) {
-        if (listaProcesos.getcolaPListosEjecucion().size() > 1) {
+        if (listaProcesos.getcolaPListosEjecucion().size() > 1 || !listaProcesos.getcolaPListos().isEmpty()) {
             // Reiniciar contador de quantum para el proceso
             proceso.setContador(0);
             // Rotar el proceso al final de la cola
             Proceso procesoRotado = listaProcesos.popColaPListoEjecucion();
-            listaProcesos.getcolaPListosEjecucion().addLast(procesoRotado);
+            listaProcesos.getcolaPListos().addLast(procesoRotado);
             System.out.println(" * Quantum terminado. Rotando " + procesoRotado.getNombre());
+            //Mostrar nueva cola de procesos listos
+            listaProcesos.imprimircolaPListos();
             // Mostrar nueva cola de ejecución
             listaProcesos.imprimircolaPListosEjecucion();
+
+            //System.out.println("\n\n"+listaProcesos.getMemoriaDispo()+"\n\n");
+
+            if (listaProcesos.getMemoriaDispo() > listaProcesos.getcolaPListos().getFirst().getTamaño()) {
+                //System.out.println("\n\nSi entro\n\n");
+                cargarProcesosRAM();
+            }
+
+            Proceso procesoActual = listaProcesos.getcolaPListosEjecucion().getFirst();
+            if (procesoActual.getT_respuesta() == -1) {
+                procesoActual.set_Trespuesta(tiempoTotal);
+                tiempoRespuestaTotal += tiempoTotal - procesoActual.getT_llegada();
+                System.out.println(" * " + procesoActual.getNombre() +
+                                    " responde por primera vez en T=" + tiempoTotal);
+                procesoActual.setEstado(true);
+            }
         } else {
             // Solo hay un proceso, reiniciar su quantum
             proceso.setContador(0);

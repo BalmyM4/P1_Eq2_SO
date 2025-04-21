@@ -155,7 +155,8 @@ public class Lista {
 
     public Proceso popColaPListoEjecucion (){
         Proceso procesoAux = colaPListosEjecucion.removeFirst();
-        imprimircolaPListosEjecucion();
+        memoriaDispo += procesoAux.getTamaño();
+        //imprimircolaPListosEjecucion();
         return procesoAux;
     }
 

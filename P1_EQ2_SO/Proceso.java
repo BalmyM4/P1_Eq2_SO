@@ -22,7 +22,7 @@ public class Proceso {
     private int t_rafaga_acum;      //Rafaga acumulada (T ejecutado)
     private int t_rafaga_faltante;  //Tiempo auxiliar
     private int turnos;             //Numero de veces qe se ha subido
-    private boolean estado;         //Estado del proceso (true = activo, false = inactivo)
+    private boolean estado;         //Indica si el proceso ha subido alguna vez al CPU
     private int t_respuesta;        //Tiempo de primer uso en CPU
 
 

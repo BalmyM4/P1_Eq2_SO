@@ -40,20 +40,20 @@ public class Auxiliar {
         numProcesos = scan.nextInt();
         
         for(int i = 0; i < numProcesos; i++ ){
-            System.out.print("Introduzca el nombre del proceso "+i+": ");
+            System.out.print("Introduzca el nombre del proceso "+(i+1)+": ");
             nombre = scan.next();
 
             do {
                 if (tamaño > capacidadRAM) {
                     System.out.println("El tamaño de un solo proceso no puede rebasar la capacidad de RAm total (RAM="+capacidadRAM+")");
                 }
-                System.out.print("Introduzca el tamaño del proceso "+i+": ");
+                System.out.print("Introduzca el tamaño del proceso "+(i+1)+": ");
                 tamaño = scan.nextInt();
             } while (tamaño > capacidadRAM);
 
-            System.out.print("Introduzca el tiempo de ejecución del proceso "+i+": ");
+            System.out.print("Introduzca el tiempo de ejecución del proceso "+(i+1)+": ");
             t_rafaga = scan.nextInt();
-            System.out.print("Introduzca el tiempo de llegada del proceso "+i+": ");
+            System.out.print("Introduzca el tiempo de llegada del proceso "+(i+1)+": ");
             t_llegada = scan.nextInt();
 
             Proceso newProceso = new Proceso(

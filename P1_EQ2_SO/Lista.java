@@ -240,7 +240,7 @@ public class Lista {
 
     public void imprimircolaPListosEjecucion(){
         if(colaPListosEjecucion.isEmpty()){
-            System.out.println("\nLa cola de procesos listos esta vacía");
+            System.out.println("\nLa cola de procesos en ejecución esta vacía");
             return;
         }
         System.out.println("\n=====================================================");
